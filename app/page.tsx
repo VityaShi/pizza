@@ -1,9 +1,1 @@
-import { Button } from '@/components/ui/button'
-
-export default function Home() {
-	return (
-		<h1>
-			<Button>Корзина</Button>
-		</h1>
-	)
-}
+export { HomePage as default } from '@/views/home'
