@@ -23,7 +23,7 @@ export default function Home() {
 						<Filters />
 					</div>
 					<div className='flex-1'>
-						<div className='flex flex-col gap-16'>Product list</div>
+						<div className='flex flex-col gap-16'></div>
 					</div>
 				</div>
 			</Container>
