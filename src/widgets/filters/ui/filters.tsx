@@ -2,6 +2,7 @@ import React from 'react'
 
 import { Input, RangeSlider, Title } from '@/shared/ui'
 
+import { CheckboxFiltersGroups } from './checkbox-filters-groups'
 import { FilterCheckbox } from './filter-checkbox'
 
 interface Props {
@@ -50,6 +51,27 @@ export const Filters: React.FC<Props> = ({ className }) => {
 					value={[0, 1000]}
 				/>
 			</div>
+			<CheckboxFiltersGroups
+				title='Ингредиенты'
+				className='mt-5'
+				limit={6}
+				defaultItems={[
+					{ text: 'Сырный соус', value: '1' },
+					{ text: 'Моцарелла', value: '2' },
+					{ text: 'Чеснок', value: '3' },
+					{ text: 'Соленый огурчики', value: '4' },
+					{ text: 'Красный лук', value: '5' },
+					{ text: 'Томаты', value: '6' }
+				]}
+				items={[
+					{ text: 'Сырный соус', value: '1' },
+					{ text: 'Моцарелла', value: '2' },
+					{ text: 'Чеснок', value: '3' },
+					{ text: 'Соленый огурчики', value: '4' },
+					{ text: 'Красный лук', value: '5' },
+					{ text: 'Томаты', value: '6' }
+				]}
+			/>
 		</div>
 	)
 }
