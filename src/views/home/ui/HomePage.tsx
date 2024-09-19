@@ -149,7 +149,7 @@ export default function Home() {
 										items: [{ price: 185 }]
 									}
 								]}
-								categoryId={1}
+								categoryId={2}
 							/>
 						</div>
 					</div>
