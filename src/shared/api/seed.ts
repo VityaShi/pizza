@@ -1,7 +1,8 @@
+// import { categories, ingredients, products } from './constants'
+import { constants } from '.'
 import { Prisma } from '@prisma/client'
 import { hashSync } from 'bcrypt'
 
-import { categories, ingredients, products } from './constants'
 import { prisma } from './prisma-client'
 
 const randomNumber = (min: number, max: number) => {
@@ -41,13 +42,13 @@ async function up() {
 		]
 	})
 	await prisma.category.createMany({
-		data: categories
+		data: constants.categories
 	})
 	await prisma.ingredient.createMany({
-		data: ingredients
+		data: constants.ingredients
 	})
 	await prisma.product.createMany({
-		data: products
+		data: constants.products
 	})
 	const pizza1 = await prisma.product.create({
 		data: {
@@ -56,7 +57,7 @@ async function up() {
 				'https://media.dodostatic.net/image/r:292x292/11EE7D610D2925109AB2E1C92CC5383C.avif',
 			categoryId: 1,
 			ingredients: {
-				connect: ingredients.slice(0, 5)
+				connect: constants.ingredients.slice(0, 5)
 			}
 		}
 	})
@@ -67,7 +68,7 @@ async function up() {
 				'https://media.dodostatic.net/image/r:292x292/11EE7D612FC7B7FCA5BE822752BEE1E5.avif',
 			categoryId: 1,
 			ingredients: {
-				connect: ingredients.slice(5, 10)
+				connect: constants.ingredients.slice(5, 10)
 			}
 		}
 	})
@@ -78,7 +79,7 @@ async function up() {
 				'https://media.dodostatic.net/image/r:292x292/11EF438E93884BFEBFE79D11095AE2D4.avif',
 			categoryId: 1,
 			ingredients: {
-				connect: ingredients.slice(10, 15)
+				connect: constants.ingredients.slice(10, 15)
 			}
 		}
 	})

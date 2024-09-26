@@ -1,8 +1,10 @@
 'use client'
 
 import { Search } from 'lucide-react'
+import Link from 'next/link'
 import React from 'react'
 
+import { api } from '../api'
 import { cn } from '../lib'
 
 interface Props {
@@ -10,12 +12,20 @@ interface Props {
 }
 
 export const SearchInput: React.FC<Props> = ({ className }) => {
-	const [focused, setFocused] = React.useState(false)
+	const [searchQuery, setSearchQuery] = React.useState('')
+	const [isFocused, setIsFocused] = React.useState(false)
+
+	const handleFocus = () => setIsFocused(true)
+	const handleBlur = () => setIsFocused(false)
+
+	React.useEffect(() => {
+		api.products.search(searchQuery)
+	}, [searchQuery])
 	return (
 		<>
-			{focused && (
+			{isFocused && (
 				<div
-					onClick={() => setFocused(false)}
+					onClick={handleBlur}
 					className='fixed top-0 left-0 bottom-0 right-0 bg-black/50 z-30'
 				/>
 			)}
@@ -29,9 +39,30 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
 				<input
 					className='rounded-2xl outline-none w-full bg-gray-100 pl-11'
 					type='text'
-					placeholder='Найти продукт...'
-					onFocus={() => setFocused(true)}
-				></input>
+					placeholder='Search for products...'
+					onFocus={handleFocus}
+					onBlur={handleBlur}
+					value={searchQuery}
+					onChange={e => setSearchQuery(e.target.value)}
+				/>
+				<div
+					className={cn(
+						'absolute w-full bg-white rounded-xl py-2 top-14 shadow-md transition-all duration-200 invisible opacity-0 z-30',
+						isFocused && 'visible opacity-100 top-12'
+					)}
+				>
+					<Link
+						className='flex items-center w-full px-3 py-2 hover:bg-primary/10 gap-3'
+						href='/product/1'
+					>
+						<img
+							alt='Pizza 1'
+							src='https://media.dodostatic.net/image/r:292x292/11EEF9E43DC39C94AA5765DBF1C97100.avif'
+							className='rounded-sm h-8 w-8'
+						/>
+						<span>Pizza 1</span>
+					</Link>
+				</div>
 			</div>
 		</>
 	)

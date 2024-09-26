@@ -137,3 +137,7 @@ export const products = [
 		categoryId: 3
 	}
 ]
+
+export enum ApiRoutes {
+	SEARCH_PRODUCTS = 'products/search'
+}
