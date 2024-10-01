@@ -3,12 +3,24 @@ import { TopBar } from '@/widgets/top-bar'
 
 import { ProductsGroupList } from '@/entities/product'
 
+import { prisma } from '@/shared/api/prisma-client'
 import { Container, Title } from '@/shared/ui'
 
 // import { Categories } from '../../../widgets/top-bar/ui/categories'
 // import { SortPopup } from '../../../widgets/top-bar/ui/sort-popup'
 
-export default function Home() {
+export default async function Home() {
+	const categories = await prisma.category.findMany({
+		include: {
+			products: {
+				include: {
+					ingredients: true,
+					items: true
+				}
+			}
+		}
+	})
+	console.log()
 	return (
 		<>
 			<Container className='mt-10'>
@@ -18,7 +30,11 @@ export default function Home() {
 					className='font-extrabold'
 				/>
 			</Container>
-			<TopBar />
+			<TopBar
+				categories={categories.filter(
+					category => category.products.length > 0
+				)}
+			/>
 			<Container className='mt-10 pb-14'>
 				<div className='flex gap-[60px]'>
 					<div className='w-[250px]'>
@@ -26,7 +42,18 @@ export default function Home() {
 					</div>
 					<div className='flex-1'>
 						<div className='flex flex-col gap-16'>
-							<ProductsGroupList
+							{categories.map(
+								category =>
+									category.products.length > 0 && (
+										<ProductsGroupList
+											key={category.id}
+											title={category.name}
+											categoryId={category.id}
+											items={category.products}
+										/>
+									)
+							)}
+							{/* <ProductsGroupList
 								title='Пиццы'
 								items={[
 									{
@@ -150,7 +177,7 @@ export default function Home() {
 									}
 								]}
 								categoryId={2}
-							/>
+							/> */}
 						</div>
 					</div>
 				</div>
